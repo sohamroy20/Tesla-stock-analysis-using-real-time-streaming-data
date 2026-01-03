@@ -1,0 +1,8 @@
+pyspark
+pandas
+numpy
+yfinance
+plotly
+dash
+hdfs
+
