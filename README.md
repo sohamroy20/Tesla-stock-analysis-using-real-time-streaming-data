@@ -111,6 +111,11 @@ ssh -i [yourkey.pem] -L 8050:localhost:8050 admin@[node-public-dns/ip-address]
   - Overbought / Undervalued
   - Z-score anomaly alerts
 
+
+
+<img width="1020" height="572" alt="image" src="https://github.com/user-attachments/assets/6bdb6aeb-a15e-430f-930e-a7c2128f6b38" />
+
+
 ---
 
 ## Interpretation
