@@ -1,0 +1,114 @@
+% file: reportContent/sections/setup.tex
+
+\section*{Setup}
+
+This section provides a detailed overview of the setup procedures, describing how to build, configure, and run the project both locally and on an AWS EC2 cluster. We split it into two parts for clarity: local development and cloud deployment.
+
+\subsection*{Local Setup}
+
+The local environment allows easy development and testing on a single machine. The project structure is:
+
+\begin{verbatim}
+DIS_Workshop/
+    data/
+        raw/                       # Downloaded full TSLA CSV dataset
+        stream_input/              # Minute-sliced simulated stream
+        output/
+            combined_anomalies/    # Final output
+            checkpoint_combined/   # Spark state checkpoints
+    scripts/
+        download_stock_data.py     # Download OHLC (open-high-low-close) data
+        split_to_stream.py         # Split OHLC CSV into minute-based rows
+        simulate_live_feed.py      # Simulated streaming writer
+        streaming_combined.py      # Unified detection pipeline
+    dashboard/
+        app.py                     # Interactive Dash dashboard
+    notebooks/
+        analysis.ipynb             # Jupyter-based visual analysis
+    requirements.txt
+    README.md
+\end{verbatim}
+
+\subsubsection*{Setup Instructions}
+\begin{enumerate}
+  \item Unpack the project repository.
+  \item Create and activate a Python virtual environment:
+    \begin{lstlisting}[language=bash]
+python3 -m venv env
+source env/bin/activate
+    \end{lstlisting}
+  \item Install the required Python libraries: \begin{lstlisting}[language=bash]
+pip install -r requirements.txt \end{lstlisting}
+\end{enumerate}
+
+\subsubsection*{Project Execution}
+
+Execution involves three separate terminals due to three concurrent processes:
+
+\begin{itemize}
+  \item \textbf{Terminal 1: Data preprocessing and streaming simulation}
+    \begin{lstlisting}[language=bash]
+python scripts/download_stock_data.py
+python scripts/split_to_stream.py
+python scripts/simulate_live_feed.py
+    \end{lstlisting}
+
+  \item \textbf{Terminal 2: Apache Spark streaming analysis}
+    \begin{lstlisting}[language=bash]
+python scripts/streaming_combined.py
+    \end{lstlisting}
+
+  \item \textbf{Terminal 3: Visualization dashboard}
+    \begin{lstlisting}[language=bash]
+python dashboard/app.py
+    \end{lstlisting}
+\end{itemize}
+
+Access the dashboard at \texttt{http://localhost:8050} in your browser.
+
+\subsection*{AWS Deployment}
+
+The AWS setup mirrors local development with these changes:
+
+\begin{itemize}
+  \item The Jupyter notebook (\texttt{notebooks/analysis.ipynb}) is omitted.
+  \item Data directories live in HDFS:
+    \begin{itemize}
+      \item[$\circ$] Input: \texttt{/Workshop/data/stream\_input/}
+      \item[$\circ$] Outputs:
+        \begin{itemize}
+          \item[$\bullet$] \texttt{/Workshop/data/output/combined\_anomalies/}
+          \item[$\bullet$] \texttt{/Workshop/data/output/checkpoint\_combined/}
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Cluster Setup and Execution}
+\begin{enumerate}
+  \item Ensure your EC2 cluster has HDFS and YARN configured and running.
+  \item SSH into the NameNode/master node.
+  \item Prepare your data by downloading and splitting as described in local setup instructions, creating the necessary HDFS directories:
+    \begin{lstlisting}[language=bash]
+hdfs dfs -mkdir -p /Workshop/data/stream_input/
+hdfs dfs -mkdir -p /Workshop/data/output/combined_anomalies/
+hdfs dfs -mkdir -p /Workshop/data/output/checkpoint_combined/
+    \end{lstlisting}
+
+  \item Launch the Spark streaming job under YARN:
+    \begin{lstlisting}[language=bash]
+spark-submit --master yarn scripts/streaming_combined.py
+    \end{lstlisting}
+
+  \item On the NameNode, start the dashboard:
+    \begin{lstlisting}[language=bash]
+python dashboard/app.py
+    \end{lstlisting}
+
+  \item From your local machine, set up SSH tunneling:
+    \begin{lstlisting}[language=bash]
+ssh -i yourkey.pem -L 8050:localhost:8050 username@namenode-public-dns
+    \end{lstlisting}
+\end{enumerate}
+
+Now open \texttt{http://localhost:8050} in your browser to view the live dashboard.  
+\newline

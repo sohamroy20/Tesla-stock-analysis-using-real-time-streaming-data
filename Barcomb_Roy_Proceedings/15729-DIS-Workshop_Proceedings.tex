@@ -1,0 +1,147 @@
+% =======================================================================================
+% =======================================================================================
+% === IMPORTANT NOTE FOR STUDENTS:                                                    ===
+% =======================================================================================
+% === Do NOT change anything in this file. Only change files in the "reportContent"   ===
+% === subfolder.                                                                      ===
+% =======================================================================================
+% =======================================================================================
+
+\documentclass[runningheads]{llncs}
+\usepackage{makeidx}
+\usepackage{chapterbib}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}\graphicspath{{images/}{reportContent/images/}}
+
+\usepackage{import}
+\usepackage{lipsum}
+\usepackage{setspace}
+
+% =======================================================================================
+% === The following latex-packages should cover all your needs.                       ===
+% === If this is not the case, please write an email to one of the assistants in      ===
+% === which you inform us which additional package you need and why.                  ===
+% === (Otherwise we will not be able to generate proceedings for the course...)       ===
+% =======================================================================================
+
+
+% For URLs
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+% For Subfigures
+\usepackage{subfig}
+
+% For Algorithms
+\usepackage{algorithmic}
+\usepackage{algorithm}
+
+% For Code Snippets
+\usepackage{listings}
+
+% For Todo Notes 
+\usepackage[colorinlistoftodos]{todonotes}
+
+% For Colors (\textcolor etc.)
+\usepackage{color}
+
+% For Tables
+\usepackage{multirow}
+
+% For Tikz
+\usepackage{tikz}
+
+% For References
+\usepackage{cleveref}
+
+% Required for turning proceedings on and off
+% (Source: http://tex.stackexchange.com/questions/87656/turning-parts-of-text-on-and-off)
+\usepackage{etoolbox}
+\usepackage{verbatim}
+\newbool{produceProceedings}
+\setbool{produceProceedings}{true} % Note for the assistants: Change to true in order to generate the proceedings.
+\newenvironment{produceProceedings}{}{}
+\ifbool{produceProceedings}{}{\AtBeginEnvironment{produceProceedings}{\comment}%
+	\AtEndEnvironment{produceProceedings}{\endcomment}}
+
+\newcommand{\coursename}{Distributed Information Systems}
+\newcommand{\courseacronym}{DIS}
+\newcommand{\semester}{spring semester 2025}
+\newcommand{\semesterCapitals}{Spring Semester 2025}
+\newcommand{\rootDocument}{15729-Workshop\_Proceedings.tex}
+
+\begin{document}
+	
+\begin{produceProceedings}
+	\begin{titlepage}
+		%\hspace{-29mm}
+		\centering
+		\includegraphics[scale=1.5]{UniBas_Logo_EN_Schwarz_RGB_65}
+		
+		\vspace{80pt}
+		
+		\centering
+		
+		\begin{spacing}{2.8}
+		{\Huge \fontfamily{phv} \bfseries Proceedings of the \coursename\ (\courseacronym) Course}
+		\end{spacing}
+		
+		\vspace{25pt}
+		
+		{\large Workshop Reports}
+		
+		\vspace{50pt}
+		
+		{\large \semesterCapitals}
+		
+		\vspace{50pt}
+		
+		{\large Natural Science Faculty of the University of Basel}
+		
+		\vspace{2pt}
+		
+		{\large	Department of Mathematics and Computer Science}
+	\end{titlepage}	
+	
+%	\frontmatter 
+	\pagestyle{headings}
+	\addtocmark{Reports}
+	%
+	\chapter*{Preface}
+	%
+	This documents contains all student workshop reports of the \coursename\ (\courseacronym) course held at the University of Basel in the \semester.
+	%
+	\chapter*{Organization}
+	The \coursename\ (\courseacronym) course of the \semester\ is organized by the Databases and Information Systems (DBIS) research group, Department of Mathematics and Computer Science, Univeristy
+	of Basel.
+	%
+	\section*{Lecturers}
+	Prof.\,Dr. Heiko Schuldt (heiko.schuldt@unibas.ch)\\
+	Dr. Marco Vogt (marco.vogt@unibas.ch)
+	%
+	\section*{Assistants}
+	Florian Spiess, M.\,Sc. (florian.spiess@unibas.ch)\\
+	Yiming Wu, M.\,Sc. (yiming.wu@unibas.ch)			
+	%
+	\tableofcontents
+\end{produceProceedings}
+	
+%
+\mainmatter
+%
+
+% Note for the assistants: Add all student reports to this list in order to generate the proceedings.
+\begin{cbunit}\import{reportContent/}{reportMain.tex}\end{cbunit}
+
+\end{document}
+
+% =======================================================================================
+% =======================================================================================
+% === IMPORTANT NOTE FOR STUDENTS:                                                    ===
+% =======================================================================================
+% === Do NOT change anything in this file. Only change files in the "reportContent"   ===
+% === subfolder.                                                                      ===
+% =======================================================================================
+% =======================================================================================

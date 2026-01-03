@@ -1,0 +1,26 @@
+\section*{Related Work}
+
+% TODO: Summarize existing literature and position your work.
+
+Real-time anomaly detection in stock market data is a critical area within distributed information systems that offers insight into market irregularities that can inform trading strategies and risk management decisions. This project specifically addresses anomaly detection in financial data streaming, aligning to the scope of the workshop specification.
+\newline
+
+The dataset used for this project was sourced from Yahoo Finance, comprising historical stock data from Tesla Inc. (TSLA). The chosen dataset included the essential columns required for our financial analysis: open price, high price, low price, close price, adjusted close price, and trading volume. These metrics provide the comprehensive market behavior insights needed for anomaly detection tasks, as they reflect market trends, volatility, and liquidity.
+\newline
+
+To facilitate effective anomaly detection, several statistical techniques were implemented:
+
+\begin{itemize}
+  \item \textbf{Exponentially Weighted Moving Average (EWMA):}
+     Utilized to smooth out short-term fluctuations and highlight longer-term trends or deviations within the data.
+  \item \textbf{Z-Score:}
+    Calculated to measure the degree to which individual data points deviate from the dataset's mean, identifying potential anomalies.
+  \item \textbf{Bollinger Bands:}
+    Employed to quantify volatility, with anomalies identified by data points significantly deviating outside these dynamically adjusting bands.
+\end{itemize}
+    
+These techniques were chosen due to their widespread use in financial analytics for detecting unusual market movements, providing a foundation for our real-time anomaly detection pipeline. This selection of methods aligns with some of the common practices and recent advances explored within the distributed systems community.
+\newline
+
+Positioning this project within the broader academic and practical context, it leverages Apache Spark’s scalable streaming capabilities, reflecting the technology's relevance to current industry standards. Thus, this project demonstrates a practical implementation for how distributed systems can enhance financial data analysis, specifically targeting real-time anomaly detection scenarios.
+\newline

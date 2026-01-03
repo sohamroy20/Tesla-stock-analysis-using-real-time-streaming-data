@@ -1,0 +1,37 @@
+\section*{Implementation}
+
+% TODO: Describe your design decisions, architecture, and code structure.
+
+The implementation of this real-time anomaly detection pipeline was influenced by considerations related to distributed systems, cloud deployment, available development tools, and our programming ability. AWS was selected as the deployment platform due to its huge prominence in distributed computing and direct relevance to the course curriculum and workshop scope. Additionally, our existing AWS Academy accounts provided a convenient and cost-effective environment for the project's deployment.
+\newline
+
+Python was chosen as the primary programming language due to its integration with Apache Spark through PySpark, in addition to the large ecosystem of libraries available, which greatly streamlined the process of data analysis and visualization. To utilize existing resources effectively, the project adapted the previously configured three-node EC2 instance cluster from Exercise 3 of the course that already featured Apache Hadoop (HDFS) for file storage and Apache YARN for resource management. Apache Spark was subsequently installed and configured to integrate seamlessly with this environment, significantly simplifying the deployment process.
+\newline
+
+Conceptually, the project architecture and code structure were organized into three distinct but interconnected components:
+
+\begin{enumerate}
+  \item \textbf{Dataset Acquisition and Preprocessing:}
+    \begin{itemize}
+      \item A Python script was developed to automate downloading Tesla’s historical stock data from Yahoo Finance.
+      \item A separate preprocessing script split this data into smaller CSV files, emulating a streaming data feed by sequentially placing these files into an input directory (\texttt{stream\_input/}) accessible to Apache Spark.
+    \end{itemize}
+      
+  \item \textbf{Streaming Data Analysis with Apache Spark:}
+    \begin{itemize}
+      \item Apache Spark continuously monitored the input directory, ingesting new data files in real-time.
+      \item Spark performed streaming analysis, computing essential financial indicators, including EWMA, z-scores, and Bollinger Bands.
+      \item Processed results, along with identified anomalies, were outputted to an output directory, providing a continuous feed of analyzed data.
+    \end{itemize}
+    
+  \item \textbf{Real-time Visualization and Dashboard:}
+    \begin{itemize}
+      \item A Python-based visualization app read continuously from the Spark output directory to update a real-time dashboard accessible via localhost in a browser.
+      \item This dashboard displayed a line graph of recent closing prices alongside computed EWMA, upper, and lower Bollinger Bands, marking any detected anomalies directly on the graph.
+      \item Below the visualization, a recommendation section provided suggestions to buy, hold, sell, short, or avoid the stock, derived from comparing the latest price to the EWMA.
+      \item The dashboard presented explicit warnings when the computed z-score exceeded a threshold of 2, indicating significant anomalies.
+    \end{itemize}
+\end{enumerate}
+        
+This structure allowed us to create a clear separation of concerns, promoting maintainability, scalability, and ease of debugging, aligning well with best practices in distributed system design. A detailed discussion of the exact setup, including code specifics and AWS cluster configuration, will be provided in the subsequent Setup section.
+\newline
